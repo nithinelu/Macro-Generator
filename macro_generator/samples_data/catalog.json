@@ -1,0 +1,2179 @@
+{
+ "source": {
+  "repo": "https://github.com/CiscoDevNet/roomdevices-macros-samples",
+  "commit": "4fa640699afc4a5e021853be2c803f2a617202b9",
+  "license": "MIT (Copyright 2018 Cisco Systems) - see LICENSE"
+ },
+ "samples": [
+  {
+   "id": "appletv-control",
+   "title": "AppleTV Control",
+   "description": "Add an Apple TV remote control to the touch 10. All communication is done directly via HDMI-CEC. No control system needed.",
+   "symbol": "📺",
+   "tags": [
+    "home office",
+    "peripherals"
+   ],
+   "folder": "AppleTV Control",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/AppleTV%20Control",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "appletv",
+     "kind": "primary",
+     "file": "AppleTV.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "panel-1",
+     "file": "appletv.xml"
+    }
+   ],
+   "params": [
+    {
+     "id": "CONNECTOR_APPLE_TV",
+     "name": "Connector id",
+     "type": "number",
+     "macro": "appletv",
+     "info": "Which input connector on video device is the Apple TV connected to?",
+     "required": true,
+     "default": 2
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "audio-call-dial-pad",
+   "title": "Audio Call Dial Pad",
+   "description": "Create an in-room control application that adds a dedicated audio call dial pad to the Touch 10",
+   "symbol": "☎️",
+   "tags": [
+    "calling"
+   ],
+   "folder": "Audio Call Dial Pad",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Audio%20Call%20Dial%20Pad",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "audioCall",
+     "kind": "primary",
+     "file": "audioCall.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "audiocall",
+     "file": "audiocall.xml"
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "audio-safe-guard",
+   "title": "Audio Safe Guard",
+   "description": "Enforce a maximum output volume on the device. Demonstrates a simple macro using API statuses and commands",
+   "symbol": "🔒",
+   "tags": [
+    "audio"
+   ],
+   "folder": "Audio Safe Guard",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Audio%20Safe%20Guard",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "Audio Safe Guard",
+     "kind": "primary",
+     "file": "Audio Safe Guard.js"
+    }
+   ],
+   "panels": [],
+   "params": [
+    {
+     "id": "MAX_VOLUME",
+     "name": "Max volume",
+     "type": "number",
+     "macro": "Audio Safe Guard",
+     "info": "The limit at which volume will be capped (0-100)",
+     "required": true,
+     "default": 70
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "automatic-room-booking",
+   "title": "Automatic Room Booking",
+   "description": "Automatic Room Booking Macro This macro demonstrates how to create an application that automatically books a room when it senses the room being used.",
+   "symbol": "",
+   "tags": [],
+   "folder": "Automatic Room Booking",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Automatic%20Room%20Booking",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "bookRoomWhenInUse",
+     "kind": "primary",
+     "file": "bookRoomWhenInUse.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "automatic-video-mute",
+   "title": "Automatic Video Mute",
+   "description": "Automatically mute video when you mute audio",
+   "symbol": "🔇",
+   "tags": [
+    "calling",
+    "audio"
+   ],
+   "folder": "Automatic Video Mute",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Automatic%20Video%20Mute",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "automute",
+     "kind": "primary",
+     "file": "automute.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "berightback",
+   "title": "BeRightBack",
+   "description": "Set a virtual background that says you are away, but still on audio.",
+   "symbol": "☕️",
+   "tags": [
+    "home office",
+    "calling"
+   ],
+   "folder": "BeRightBack",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/BeRightBack",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "berightback",
+     "kind": "primary",
+     "file": "berightback.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "berightback",
+     "file": "berightback.xml"
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "big-red-button",
+   "title": "Big Red Button",
+   "description": "Quick action such as muting with a connected USB device",
+   "symbol": "🔴",
+   "tags": [
+    "home office",
+    "peripherals"
+   ],
+   "folder": "Big Red Button",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Big%20Red%20Button",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "BigRedButton",
+     "kind": "primary",
+     "file": "BigRedButton.js"
+    }
+   ],
+   "panels": [],
+   "params": [
+    {
+     "id": "action",
+     "name": "In-call action",
+     "type": "option",
+     "macro": "BigRedButton",
+     "info": "What happens when tapping button in call",
+     "required": false,
+     "values": {
+      "toggleMute": "Mute yourself",
+      "endCall": "End call"
+     }
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "block-outgoing-calls",
+   "title": "Block Outgoing Calls",
+   "description": "Block certain numbers in a reject list from being called from the system.",
+   "symbol": "🛑",
+   "tags": [
+    "calling"
+   ],
+   "folder": "Block Outgoing Calls",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Block%20Outgoing%20Calls",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "block-outgoing",
+     "kind": "primary",
+     "file": "block-outgoing.js"
+    }
+   ],
+   "panels": [],
+   "params": [
+    {
+     "id": "NumberToBlock",
+     "name": "Number to block",
+     "type": "string",
+     "macro": "block-outgoing",
+     "info": "Partial number is also ok",
+     "required": true,
+     "default": "macro.polo@cisco.com"
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "camera-control-with-wide-angle-view",
+   "title": "Camera control with wide angle view",
+   "description": "Your custom camera control page, including creating a wide angle view of two cameras and controlling both simultaneously.",
+   "symbol": "📽",
+   "tags": [
+    "meeting room"
+   ],
+   "folder": "Camera control with wide angle view",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Camera%20control%20with%20wide%20angle%20view",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "Camera Controls",
+     "kind": "primary",
+     "file": "Camera Controls.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "cameracontrolpanel",
+     "file": "Camera Controls.xml"
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "child-safe-controls",
+   "title": "Child safe controls",
+   "description": "Child Safe Controls Replace the end call button with a slider to end the call.",
+   "symbol": "",
+   "tags": [],
+   "folder": "Child safe controls",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Child%20safe%20controls",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "Child safe call",
+     "kind": "primary",
+     "file": "Child safe call.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "end-call",
+     "file": "endcall.xml",
+     "optional": false
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "close-webapp",
+   "title": "Close WebApp",
+   "description": "Close WebApp Add a 'Close web view' button to the touch controller that allows you to remove any web view from the main screen.",
+   "symbol": "",
+   "tags": [],
+   "folder": "Close WebApp",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Close%20WebApp",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "WebApp Close",
+     "kind": "primary",
+     "file": "WebApp Close.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "conditional-autoanswer-with-prompt",
+   "title": "Conditional Autoanswer with Prompt",
+   "description": "Auto answer on incoming calls - but only for a select number of remote sites",
+   "symbol": "😴",
+   "tags": [
+    "calling"
+   ],
+   "folder": "Conditional Autoanswer with Prompt",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Conditional%20Autoanswer%20with%20Prompt",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "Conditional Autoanswer",
+     "kind": "primary",
+     "file": "Conditional Autoanswer.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "control-room-devices-using-usb-input-device",
+   "title": "Control Room Devices using USB Input Device",
+   "description": "Cisco CE Video Endpoints Macros - Using USB input devices like Keyboard and RF Remote Controls to control the Room Devices. These macros demonstrate how to control a Cisco video endpoint using a USB Keyboard - or other input devices like remote controls buttons that uses USB and ",
+   "symbol": "",
+   "tags": [],
+   "folder": "Control Room Devices using USB Input Device",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Control%20Room%20Devices%20using%20USB%20Input%20Device",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "QWERTY_Dialling",
+     "kind": "primary",
+     "file": "QWERTY_Dialling.js"
+    },
+    {
+     "name": "RemoteControl",
+     "kind": "primary",
+     "file": "RemoteControl.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "custom-config-panel",
+   "title": "Custom Config Panel",
+   "description": "Custom configuration panel A custom panel that allows users to control configs that are available on the API, but not to users through the default user interface.",
+   "symbol": "",
+   "tags": [],
+   "folder": "Custom Config Panel",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Custom%20Config%20Panel",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "Room Setup",
+     "kind": "primary",
+     "file": "Room Setup.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "panel_1",
+     "file": "Custom Config demo.xml",
+     "optional": false
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "customer-satisfaction-survey",
+   "title": "Customer Satisfaction Survey",
+   "description": "Customer Satisfaction Survey Pop up a satisfaction survey at the end of a call.",
+   "symbol": "",
+   "tags": [],
+   "folder": "Customer Satisfaction Survey",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Customer%20Satisfaction%20Survey",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "customersatisfaction",
+     "kind": "primary",
+     "file": "customersatisfaction.js"
+    },
+    {
+     "name": "customersatisfaction_with_input",
+     "kind": "primary",
+     "file": "customersatisfaction_with_input.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "daily-reboot",
+   "title": "Daily Reboot",
+   "description": "Set a time of day you want your device to reboot",
+   "symbol": "🔄",
+   "tags": [
+    "home office",
+    "meeting room"
+   ],
+   "folder": "Daily Reboot",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Daily%20Reboot",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "DailyReboot",
+     "kind": "primary",
+     "file": "DailyReboot.js"
+    }
+   ],
+   "panels": [],
+   "params": [
+    {
+     "id": "hourBoot",
+     "name": "Hour of boot time (0-23)",
+     "type": "number",
+     "macro": "DailyReboot",
+     "info": "Number is required",
+     "required": true,
+     "default": 21
+    },
+    {
+     "id": "minuteBoot",
+     "name": "Minute of boot time (0-59)",
+     "type": "number",
+     "macro": "DailyReboot",
+     "info": "Number is required",
+     "required": true,
+     "default": 30
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "datadog-call-performance-monitoring",
+   "title": "Datadog Call Performance Monitoring",
+   "description": "Vizualize and alert on the performance of your calls while they happen",
+   "symbol": "🚨",
+   "tags": [
+    "calling",
+    "meeting room",
+    "peripherals",
+    "performance",
+    "monitoring"
+   ],
+   "folder": "Datadog Call Performance Monitoring",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Datadog%20Call%20Performance%20Monitoring",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "datadog",
+     "kind": "primary",
+     "file": "datadog.js"
+    }
+   ],
+   "panels": [],
+   "params": [
+    {
+     "id": "DD_TOKEN",
+     "name": "Datadog Client Token",
+     "type": "string",
+     "macro": "datadog",
+     "info": "Get from https://app.datadoghq.com/organization-settings/client-tokens",
+     "required": true,
+     "default": "REPLACE_ME"
+    },
+    {
+     "id": "DD_TAGS",
+     "name": "Datadog Tags",
+     "type": "string",
+     "macro": "datadog",
+     "info": "Comma Delimited, adds important metadata to your performance data",
+     "required": true,
+     "default": "env:stg,team:rocket"
+    },
+    {
+     "id": "CHECK_IF_CALL_FREQUENCY",
+     "name": "Call Check Frequency",
+     "type": "number",
+     "macro": "datadog",
+     "info": "Frequency that the device will check if there is an active call to monitor",
+     "required": true,
+     "default": 60000
+    },
+    {
+     "id": "IN_CALL_CHECK_FREQUENCY",
+     "name": "In-Call Collection Frequency",
+     "type": "number",
+     "macro": "datadog",
+     "info": "Frequency that the device will collect data if there is an active call to monitor",
+     "required": true,
+     "default": 60000
+    },
+    {
+     "id": "GENERAL_CHECK_FREQUENCY",
+     "name": "General Collection Frequency",
+     "type": "number",
+     "macro": "datadog",
+     "info": "Frequency that the device will collect general device status data",
+     "required": true,
+     "default": 300000
+    },
+    {
+     "id": "MONITOR_PERIPHERALS",
+     "name": "Monitor Peripherals",
+     "type": "bool",
+     "macro": "datadog",
+     "info": "Do you want to monitor the connection status of peripheral devices",
+     "required": true,
+     "default": true
+    }
+   ],
+   "extras": [
+    "dashboard.json"
+   ],
+   "caution": "DD_TOKEN is written in plain text into the macro source on the device."
+  },
+  {
+   "id": "dial-favorite-from-homescreen",
+   "title": "Dial Favorite From Homescreen",
+   "description": "Cisco CE Room Devices Macros - One Button to Dial This macro and corresponding UI Extension demonstrate how to create a panel with a single one-button-to-dial speed dial on the touch controller.",
+   "symbol": "",
+   "tags": [],
+   "folder": "Dial Favorite From Homescreen",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Dial%20Favorite%20From%20Homescreen",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "onebuttontodial",
+     "kind": "primary",
+     "file": "onebuttontodial.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "onebuttontodial",
+     "file": "onebuttontodial.xml",
+     "optional": false
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "early-obtp",
+   "title": "Early OBTP",
+   "description": "Show One Button To Push earlier than the default 5 minutes.",
+   "symbol": "🟢",
+   "tags": [
+    "calling",
+    "meeting room",
+    "booking"
+   ],
+   "folder": "Early OBTP",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Early%20OBTP",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "early-obtp",
+     "kind": "primary",
+     "file": "early-obtp.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "end-of-meeting-countdown",
+   "title": "End Of Meeting Countdown",
+   "description": "",
+   "symbol": "",
+   "tags": [],
+   "folder": "End Of Meeting Countdown",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/End%20Of%20Meeting%20Countdown",
+   "readme": null,
+   "macros": [
+    {
+     "name": "BookingCountdown",
+     "kind": "primary",
+     "file": "BookingCountdown.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "energy-prices",
+   "title": "Energy Prices",
+   "description": "Show hourly Norwegian electricity prices on home screen",
+   "symbol": "⚡️",
+   "tags": [
+    "home office"
+   ],
+   "folder": "Energy Prices",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Energy%20Prices",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "energyprices",
+     "kind": "primary",
+     "file": "energyprice.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "energy-prices",
+     "file": "energy-prices.xml"
+    },
+    {
+     "panel_id": "energy-prices",
+     "file": "energyprices.xml",
+     "optional": true
+    }
+   ],
+   "params": [
+    {
+     "id": "zone",
+     "name": "Energy Zone",
+     "type": "option",
+     "macro": "energyprices",
+     "info": "Which Norwegian energy zone you belong to",
+     "required": true,
+     "values": {
+      "NO1": "Zone 1 - South/East Norway",
+      "NO2": "Zone 2 - South Norway",
+      "NO3": "Zone 3 - Central Norway",
+      "NO4": "Zone 4 - North Norway",
+      "NO5": "Zone 5 - West Norway"
+     }
+    },
+    {
+     "id": "hasPlotPanel",
+     "name": "Show plot panel",
+     "type": "bool",
+     "macro": "energyprices",
+     "info": "Add home screen button to show daily price plot",
+     "required": false,
+     "default": true
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "enroll-certificate",
+   "title": "Enroll Certificate",
+   "description": "Enroll a certificate on the device using SCEP",
+   "symbol": "🔑",
+   "tags": [
+    "security"
+   ],
+   "folder": "Enroll Certificate",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Enroll%20Certificate",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "CertificateEnroll",
+     "kind": "primary",
+     "file": "CertificateEnroll.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "global-macro-messaging",
+   "title": "Global Macro Messaging",
+   "description": "Library for Inter-Macro and Inter-Codec messaging",
+   "symbol": "🔀",
+   "tags": [
+    "library"
+   ],
+   "folder": "Global Macro Messaging",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Global%20Macro%20Messaging",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "GMM_Lib",
+     "kind": "library",
+     "file": "GMM_Lib.js"
+    },
+    {
+     "name": "GMM_01 Local Example",
+     "kind": "example",
+     "file": "Examples/GMM_01 Local Example.js"
+    },
+    {
+     "name": "GMM_02 RemoteIP Example",
+     "kind": "example",
+     "file": "Examples/GMM_02 RemoteIP Example.js"
+    },
+    {
+     "name": "GMM_03 Remote Webex Example",
+     "kind": "example",
+     "file": "Examples/GMM_03 Remote Webex Example.js"
+    },
+    {
+     "name": "GMM_04 Queue Example",
+     "kind": "example",
+     "file": "Examples/GMM_04 Queue Example.js"
+    },
+    {
+     "name": "GMM_05 Scheduling",
+     "kind": "example",
+     "file": "Examples/GMM_05 Scheduling.js"
+    },
+    {
+     "name": "GMM_06 Messages to Webex",
+     "kind": "example",
+     "file": "Examples/GMM_06 Messages to Webex.js"
+    },
+    {
+     "name": "GMM_07 Memory Functions",
+     "kind": "example",
+     "file": "Examples/GMM_07 Memory Functions.js"
+    },
+    {
+     "name": "GMM_Event Receiver",
+     "kind": "example",
+     "file": "Examples/GMM_Event Receiver.js"
+    },
+    {
+     "name": "GMM_In Focus",
+     "kind": "example",
+     "file": "In_Focus/GMM_In Focus.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [
+    "In_Focus/README.MD"
+   ],
+   "caution": ""
+  },
+  {
+   "id": "http-post-report-issue",
+   "title": "HTTP Post - Report Issue",
+   "description": "Cisco CE Video Endpoints Macros - HTTP Post - Report Issue This macro and corresponding In-Room Control sample demonstrates how to creata a report issue application that can send the report to your issue tracking tool of choice using HTTP Post, like ServiceNow",
+   "symbol": "",
+   "tags": [],
+   "folder": "HTTP Post - Report Issue",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/HTTP%20Post%20-%20Report%20Issue",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "ReportIssue",
+     "kind": "primary",
+     "file": "ReportIssue.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "reportissue",
+     "file": "ReportIssue.xml",
+     "optional": false
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "in-room-control-debugger",
+   "title": "In-Room Control Debugger",
+   "description": "In-Room Control Debugger Display events as they occur in a notification on the main screen. Quick way to learn how the API works.",
+   "symbol": "",
+   "tags": [],
+   "folder": "In-Room Control Debugger",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/In-Room%20Control%20Debugger",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "In-Room Control Debugger",
+     "kind": "primary",
+     "file": "In-Room Control Debugger.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "instacam",
+   "title": "Instacam",
+   "description": "Tweak the color saturation and color compensation of your Desk device.",
+   "symbol": "📸",
+   "tags": [
+    "home office"
+   ],
+   "folder": "Instacam",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Instacam",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "instacam",
+     "kind": "primary",
+     "file": "instacam.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "instacam",
+     "file": "instacam.xml"
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "join-3rd-party-meeting",
+   "title": "Join 3rd Party Meeting",
+   "description": "Join 3rd Party Meeting UI A Join Meeting Panel/Text Input lets you join 3rd party non-Webex meetings.",
+   "symbol": "",
+   "tags": [],
+   "folder": "Join 3rd Party Meeting",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Join%203rd%20Party%20Meeting",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "JoinMeetingGeneric",
+     "kind": "primary",
+     "file": "JoinMeetingGeneric.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "callmeeting",
+     "file": "JoinMeetingPanel.xml"
+    }
+   ],
+   "params": [
+    {
+     "id": "meetingDomain",
+     "name": "Meeting Domain",
+     "type": "string",
+     "macro": "JoinMeetingGeneric",
+     "info": "Eg @zoomcrc.com. The url/domain for the 3rd party provider, without the actual meeting number",
+     "required": true,
+     "default": "@yourbridge.com"
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "join-zoom-with-dtmf-zoom-tools",
+   "title": "Join Zoom with DTMF Zoom Tools",
+   "description": "Additions * Zoom Advanced Options * New configuration items available to better define how this system will behave in call * DualScreen mode fully Functional * On - Enables Dual Screen Mode * Off - Disables Dual Screen Mode * Auto - Attempts to determine if 2 Displays are connect",
+   "symbol": "",
+   "tags": [],
+   "folder": "Join Zoom with DTMF Zoom Tools",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Join%20Zoom%20with%20DTMF%20Zoom%20Tools",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "JoinZoom_JoinText_4-1-1",
+     "kind": "library",
+     "file": "JoinZoom_JoinText_4-1-1.js"
+    },
+    {
+     "name": "Memory_Functions",
+     "kind": "library",
+     "file": "Memory_Functions.js"
+    },
+    {
+     "name": "JoinZoom_Config_4-1-1",
+     "kind": "library",
+     "file": "JoinZoom_Config_4-1-1.js"
+    },
+    {
+     "name": "JoinZoom_Main_4-1-1",
+     "kind": "primary",
+     "file": "JoinZoom_Main_4-1-1.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "joinZoom~4-1-1",
+     "file": "joinZoom~4-1-1.xml"
+    },
+    {
+     "panel_id": "joinZoom~4-1-1~Style_New+Personal",
+     "file": "joinZoom~4-1-1~Style_New+Personal.xml"
+    },
+    {
+     "panel_id": "joinZoom~4-1-1~Style_New",
+     "file": "joinZoom~4-1-1~Style_New.xml"
+    },
+    {
+     "panel_id": "jzoomTools~4-1-1~Tools~Visible",
+     "file": "jzoomTools~4-1-1~Tools~Visible.xml"
+    },
+    {
+     "panel_id": "jzoomTools~4-1-1~Tools~host",
+     "file": "jzoomTools~4-1-1~Tools~host.xml"
+    },
+    {
+     "panel_id": "jzoomTools~4-1-1~Tools~participant",
+     "file": "jzoomTools~4-1-1~Tools~participant.xml"
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "language-selector",
+   "title": "Language Selector",
+   "description": "By default the touch 10 does not have a way for the end user to select the interface language. This macro adds this feature. Great for those multi-language environments.",
+   "symbol": "💬",
+   "tags": [
+    "meeting room"
+   ],
+   "folder": "Language Selector",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Language%20Selector",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "language-selector",
+     "kind": "primary",
+     "file": "language-selector.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "panel_1",
+     "file": "language-selector.xml"
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "launch-halfwake",
+   "title": "Launch Halfwake",
+   "description": "Set your system in halfwake / signage mode instantly from the home screen",
+   "symbol": "😴",
+   "tags": [
+    "screensaver"
+   ],
+   "folder": "Launch Halfwake",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Launch%20Halfwake",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "LaunchHalfwake",
+     "kind": "primary",
+     "file": "LaunchHalfwake.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "halfwake",
+     "file": "launchhalfwake.xml"
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "library-send-webex-message",
+   "title": "Library - Send Webex Message",
+   "description": "Send a Webex (chat) message from the video device using the Webex APIs",
+   "symbol": "💌",
+   "tags": [
+    "library"
+   ],
+   "folder": "Library - Send Webex Message",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Library%20-%20Send%20Webex%20Message",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "webex",
+     "kind": "library",
+     "file": "webex.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "library-weather-forecast",
+   "title": "Library - Weather Forecast",
+   "description": "Get global weather forecast from free Norwegian weather service",
+   "symbol": "🌤",
+   "tags": [
+    "library"
+   ],
+   "folder": "Library - Weather Forecast",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Library%20-%20Weather%20Forecast",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "lib-weather",
+     "kind": "primary",
+     "file": "lib-weather.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "measure-climate",
+   "title": "Measure Climate",
+   "description": "Measure the temperature and humidity in your office or home office, and plot it over time.",
+   "symbol": "",
+   "tags": [],
+   "folder": "Measure Climate",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Measure%20Climate",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "storage-csv",
+     "kind": "library",
+     "file": "storage-csv.js"
+    },
+    {
+     "name": "measureclimate",
+     "kind": "primary",
+     "file": "measureclimate.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "climate",
+     "file": "climate.xml"
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "multi-content-solution",
+   "title": "Multi-Content Solution",
+   "description": "Compose multiple video inputs to one presentation source and send to far-end",
+   "symbol": "🔀",
+   "tags": [
+    "meeting room"
+   ],
+   "folder": "Multi-Content Solution",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Multi-Content%20Solution",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "MCS_with_laptop",
+     "kind": "primary",
+     "file": "MCS_with_laptop.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "mcs_panel",
+     "file": "MCS_panel.xml"
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "mute-on-entry",
+   "title": "Mute On Entry",
+   "description": "Auto-mute anytime you join a call.",
+   "symbol": "🤫",
+   "tags": [
+    "privacy",
+    "home office",
+    "calling"
+   ],
+   "folder": "Mute On Entry",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Mute%20On%20Entry",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "mute-on-entry",
+     "kind": "primary",
+     "file": "MuteOnEntry.js"
+    }
+   ],
+   "panels": [],
+   "params": [
+    {
+     "id": "muteVideo",
+     "name": "Also mute video",
+     "type": "bool",
+     "macro": "mute-on-entry",
+     "info": "Mute both video and audio when starting a call.",
+     "required": true,
+     "default": false
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "philips-hue",
+   "title": "Philips Hue",
+   "description": "Control your lights from the video device",
+   "symbol": "💡",
+   "tags": [
+    "peripherals",
+    "home office"
+   ],
+   "folder": "Philips Hue",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Philips%20Hue",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "ui-builder",
+     "kind": "library",
+     "remote": {
+      "url": "https://raw.githubusercontent.com/cisco-ce/guido/05cf0d06011f3cf687e384c5d035083e160d998a/src/ui-builder.js",
+      "sha256": "b16886580fee66c567da95a0f9654aec8ba3d8e848ae4225ef933039f88f84a8",
+      "size": 7269
+     }
+    },
+    {
+     "name": "ui",
+     "kind": "library",
+     "remote": {
+      "url": "https://raw.githubusercontent.com/cisco-ce/guido/05cf0d06011f3cf687e384c5d035083e160d998a/src/ui.js",
+      "sha256": "fe8d796454d2c78ae5c2f0a2ab830240e45b1ee9a1ede70cfa9247bf6900c14c",
+      "size": 10150
+     }
+    },
+    {
+     "name": "hue-lib",
+     "kind": "library",
+     "file": "hue-lib.js"
+    },
+    {
+     "name": "hue",
+     "kind": "primary",
+     "file": "hue.js"
+    },
+    {
+     "name": "incall-indicator",
+     "kind": "example",
+     "file": "examples/incall-indicator.js"
+    },
+    {
+     "name": "incoming-call-blink",
+     "kind": "example",
+     "file": "examples/incoming-call-blink.js"
+    },
+    {
+     "name": "presence-indicator",
+     "kind": "example",
+     "file": "examples/presence-indicator.js"
+    },
+    {
+     "name": "temperature",
+     "kind": "example",
+     "file": "examples/temperature.js"
+    },
+    {
+     "name": "virtual-background",
+     "kind": "example",
+     "file": "examples/virtual-background.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "hue-lights",
+     "file": "huepanel.xml"
+    },
+    {
+     "panel_id": "virtual-background",
+     "file": "examples/virtual-background-panel.xml",
+     "optional": true
+    }
+   ],
+   "params": [],
+   "extras": [
+    "TODO.md"
+   ],
+   "caution": ""
+  },
+  {
+   "id": "pin-code-lock",
+   "title": "Pin Code Lock",
+   "description": "Require user to enter pin code when using the video system",
+   "symbol": "🔐",
+   "tags": [
+    "privacy",
+    "home office"
+   ],
+   "folder": "Pin Code Lock",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Pin%20Code%20Lock",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "pin-code",
+     "kind": "primary",
+     "file": "pin-code.js"
+    }
+   ],
+   "panels": [],
+   "params": [
+    {
+     "id": "PIN_CODE",
+     "name": "Your pin code",
+     "type": "string",
+     "macro": "pin-code",
+     "info": "Numbers are recommended, but you can choose textual password instead",
+     "required": true,
+     "default": "1234"
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "quiet-mode",
+   "title": "Quiet Mode",
+   "description": "Make your device silent at the end of your workday",
+   "symbol": "🔕",
+   "tags": [
+    "privacy",
+    "home office"
+   ],
+   "folder": "Quiet Mode",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Quiet%20Mode",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "schedule",
+     "kind": "library",
+     "file": "schedule.js"
+    },
+    {
+     "name": "quietmode",
+     "kind": "primary",
+     "file": "quietmode.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "quietmode",
+     "file": "quietmode.xml"
+    }
+   ],
+   "params": [
+    {
+     "id": "backgroundUrl",
+     "name": "Wallpaper",
+     "type": "option",
+     "macro": "quietmode",
+     "info": "What background would you like in quiet mode?",
+     "required": true,
+     "values": {
+      "": "(Don't change)",
+      "https://images.unsplash.com/photo-1488543882437-49f6f714ad05?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2676&q=80&t=river": "River",
+      "https://images.unsplash.com/photo-1620503374956-c942862f0372?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2670&q=80&t=abstract": "Abstract",
+      "https://images.unsplash.com/photo-1493441883526-0ed85220dc0c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2666&q=80&t=waves": "Waves",
+      "https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2560&q=80&t=forestandwaer": "Forest and water"
+     }
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "remember-my-volume",
+   "title": "Remember My Volume",
+   "description": "Ensure your volume setting is remembered, even after reboot.",
+   "symbol": "🔊",
+   "tags": [
+    "home office"
+   ],
+   "folder": "Remember My Volume",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Remember%20My%20Volume",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "RememberMyVolume",
+     "kind": "primary",
+     "file": "RememberMyVolume.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "remote-monitoring-alert",
+   "title": "Remote Monitoring Alert",
+   "description": "Display OSD\\Touch warning text when video snapshots (aka remote monitoring) are being captured",
+   "symbol": "🚨",
+   "tags": [
+    "meeting room"
+   ],
+   "folder": "Remote Monitoring Alert",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Remote%20Monitoring%20Alert",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "remoteMonitoringAlert",
+     "kind": "primary",
+     "file": "remoteMonitoringAlert.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "report-issue",
+   "title": "Report Issue",
+   "description": "Report Issue web dialog that connects to Service Now",
+   "symbol": "📣",
+   "tags": [
+    "meeting room"
+   ],
+   "folder": "Report Issue",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Report%20Issue",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "report-issue",
+     "kind": "primary",
+     "remote": {
+      "url": "https://raw.githubusercontent.com/cisco-ce/roomos-samples/fe6b9d206e9f611035d0694134b6e97e6dbde69d/report-issue/macro-uiextensions/report-issue.js",
+      "sha256": "a1b3235743bfc844769c2cc23e328cc1d09765bf8fa408d622f0ac54321e1aa8",
+      "size": 2256
+     }
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "report_issue",
+     "remote": {
+      "url": "https://raw.githubusercontent.com/cisco-ce/roomos-samples/fe6b9d206e9f611035d0694134b6e97e6dbde69d/report-issue/macro-uiextensions/report-issue.xml",
+      "sha256": "c9955da6a4932aa8c92cf7585d28414976be9c6c9560454458a825688b84b0b1",
+      "size": 289
+     }
+    }
+   ],
+   "params": [
+    {
+     "id": "serviceNowInstance",
+     "name": "Service Now Instance",
+     "type": "string",
+     "macro": "report-issue",
+     "info": "Eg dev70811",
+     "required": true
+    },
+    {
+     "id": "serviceNowUsername",
+     "name": "Service Now Username",
+     "type": "string",
+     "macro": "report-issue",
+     "info": "",
+     "required": true
+    },
+    {
+     "id": "serviceNowPassword",
+     "name": "Service Now Password",
+     "type": "string",
+     "macro": "report-issue",
+     "info": "",
+     "required": true
+    },
+    {
+     "id": "botToken",
+     "name": "Webex Bot Token",
+     "type": "string",
+     "macro": "report-issue",
+     "info": "Used to send notification when issue is created",
+     "required": false
+    },
+    {
+     "id": "notify",
+     "name": "Webex recipient",
+     "type": "string",
+     "macro": "report-issue",
+     "info": "",
+     "required": false
+    }
+   ],
+   "extras": [],
+   "caution": "Sends the ServiceNow username/password and Webex bot token you enter in the query string of a page hosted at cisco-ce.github.io. Use a test ServiceNow instance and a throw-away bot, or host the page yourself. serviceNowPassword, botToken is written in plain text into the macro source on the device."
+  },
+  {
+   "id": "room-capacity-alert",
+   "title": "Room Capacity Alert",
+   "description": "Display Alert on the device if a set capacity is exceeded - Based on people count API",
+   "symbol": "🚨",
+   "tags": [
+    "meeting room"
+   ],
+   "folder": "Room Capacity Alert",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Room%20Capacity%20Alert",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "RoomCapacity",
+     "kind": "primary",
+     "file": "RoomCapacity.js"
+    }
+   ],
+   "panels": [],
+   "params": [
+    {
+     "id": "maxPeople",
+     "name": "Max people",
+     "type": "number",
+     "macro": "RoomCapacity",
+     "info": "The max number of people allowed in the room. For testing, set to 0",
+     "required": true,
+     "default": 1
+    },
+    {
+     "id": "alertTime",
+     "name": "Alert duration",
+     "type": "number",
+     "macro": "RoomCapacity",
+     "info": "Number of seconds to show the alert on screen",
+     "required": true,
+     "default": 20
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "room-cleaning-and-usage",
+   "title": "Room Cleaning and Usage",
+   "description": "Records cleaning events, shows time since last used, time since last cleaned, number of times since last cleaned, warns of capacity restrictions.",
+   "symbol": "🧼",
+   "tags": [
+    "meeting room"
+   ],
+   "folder": "Room Cleaning and Usage",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Room%20Cleaning%20and%20Usage",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "RoomCleaningAndUsage",
+     "kind": "primary",
+     "file": "RoomCleaningAndUsage.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "roomCleaning",
+     "file": "RoomCleaningAndUsage.xml"
+    }
+   ],
+   "params": [
+    {
+     "id": "pinCode",
+     "name": "Pin code",
+     "type": "string",
+     "macro": "RoomCleaningAndUsage",
+     "info": "Pin code number for cleaners",
+     "required": true,
+     "default": "1234"
+    },
+    {
+     "id": "maxPeople",
+     "name": "Max people",
+     "type": "number",
+     "macro": "RoomCleaningAndUsage",
+     "info": "Max number of people allowed in the room",
+     "required": false,
+     "default": 1
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "room-kit-pro-sx80-gpio",
+   "title": "Room Kit Pro SX80 GPIO",
+   "description": "See how to get the device to perform some actions when triggering a change on the built in GPIO. Add an one-button-to-dial button on the wall.",
+   "symbol": "🔌",
+   "tags": [
+    "meeting room",
+    "peripherals"
+   ],
+   "folder": "Room Kit Pro SX80 GPIO",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Room%20Kit%20Pro%20SX80%20GPIO",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "Room Kit Pro SX80 GPIO",
+     "kind": "primary",
+     "file": "Room Kit Pro SX80 GPIO.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "room-kit-pro-video-compositing",
+   "title": "Room Kit Pro Video Compositing",
+   "description": "Cisco CE Video Endpoints Macros - Room Kit Pro Video Compositing This macro and corresponding In-Room Control sample demonstrates the video compositing capabilites of the Room Kit Pro device. It shows compositing for the main video stream, the presentation stream and local compos",
+   "symbol": "",
+   "tags": [],
+   "folder": "Room Kit Pro Video Compositing",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Room%20Kit%20Pro%20Video%20Compositing",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "CustomMainAndPresentation",
+     "kind": "primary",
+     "file": "CustomMainAndPresentation.js"
+    },
+    {
+     "name": "LocalLayoutControls",
+     "kind": "primary",
+     "file": "LocalLayoutControls.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "layout_demo",
+     "file": "roomcontrolconfig_roomkitpro_videocompositing.xml",
+     "optional": false
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "room-metrics",
+   "title": "Room Metrics",
+   "description": "Show the utilization and environmental metrics about the device of the day",
+   "symbol": "📊",
+   "tags": [
+    "meeting room"
+   ],
+   "folder": "Room Metrics",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Room%20Metrics",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "Room Metrics",
+     "kind": "primary",
+     "file": "room-metrics.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "samsung-flip",
+   "title": "Samsung Flip",
+   "description": "Easily switch from Webex mode to Samsung Flip mode.",
+   "symbol": "🖌️",
+   "tags": [
+    "meeting room"
+   ],
+   "folder": "Samsung Flip",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Samsung%20Flip",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "flipToFlip",
+     "kind": "primary",
+     "file": "flipToFlip.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "webexOnFlip",
+     "file": "flip.xml"
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "scheduled-actions",
+   "title": "Scheduled Actions",
+   "description": "Have the endpoint device automatically perform actions, like placing a call, at a specified time and day.",
+   "symbol": "📆",
+   "tags": [
+    "meeting room"
+   ],
+   "folder": "Scheduled Actions",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Scheduled%20Actions",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "Scheduler",
+     "kind": "primary",
+     "file": "Scheduler.js"
+    }
+   ],
+   "panels": [],
+   "params": [
+    {
+     "id": "ScheduleTime",
+     "name": "Time of day",
+     "type": "string",
+     "macro": "Scheduler",
+     "info": "Format: HH:MM (24 hour clock), the time you want the action to occur, in the local timezone",
+     "required": true,
+     "default": "10:00"
+    },
+    {
+     "id": "SchedulerDialNumber",
+     "name": "Number to cal",
+     "type": "string",
+     "macro": "Scheduler",
+     "info": "",
+     "required": true,
+     "default": "fireplace@ivr.vc"
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "sennheiser-mute-sync",
+   "title": "Sennheiser Mute Sync",
+   "description": "Sync the mute state on a Sennheiser TCCM ceiling microphone",
+   "symbol": "🔇",
+   "tags": [
+    "calling",
+    "audio",
+    "peripherals"
+   ],
+   "folder": "Sennheiser Mute Sync",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Sennheiser%20Mute%20Sync",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "sennheiser-lib",
+     "kind": "library",
+     "file": "sennheiser-lib.js"
+    },
+    {
+     "name": "sennheiser-sync",
+     "kind": "primary",
+     "file": "sennheiser-sync.js"
+    }
+   ],
+   "panels": [],
+   "params": [
+    {
+     "id": "ip",
+     "name": "IP address",
+     "type": "string",
+     "macro": "sennheiser-sync",
+     "info": "",
+     "required": true
+    },
+    {
+     "id": "username",
+     "name": "API username",
+     "type": "string",
+     "macro": "sennheiser-sync",
+     "info": "",
+     "required": true
+    },
+    {
+     "id": "password",
+     "name": "API password",
+     "type": "string",
+     "macro": "sennheiser-sync",
+     "info": "",
+     "required": true
+    }
+   ],
+   "extras": [],
+   "caution": "password is written in plain text into the macro source on the device."
+  },
+  {
+   "id": "settings-pro",
+   "title": "Settings Pro",
+   "description": "The settings you never knew you always wanted.",
+   "symbol": "🛠",
+   "tags": [
+    "home office",
+    "web",
+    "audio"
+   ],
+   "folder": "Settings Pro",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Settings%20Pro",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "ui",
+     "kind": "library",
+     "remote": {
+      "url": "https://raw.githubusercontent.com/cisco-ce/guido/05cf0d06011f3cf687e384c5d035083e160d998a/src/ui.js",
+      "sha256": "fe8d796454d2c78ae5c2f0a2ab830240e45b1ee9a1ede70cfa9247bf6900c14c",
+      "size": 10150
+     }
+    },
+    {
+     "name": "settings-pro",
+     "kind": "primary",
+     "file": "settings-pro.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "settingspro",
+     "file": "settingspro.xml"
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "signage-carousel",
+   "title": "Signage Carousel",
+   "description": "Change between several different signage URLs at regular intervals.",
+   "symbol": "🎠",
+   "tags": [
+    "screensaver"
+   ],
+   "folder": "Signage Carousel",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Signage%20Carousel",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "SignageCarousel",
+     "kind": "primary",
+     "file": "SignageCarousel.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "smart-dual-screen-presentation",
+   "title": "Smart Dual Screen Presentation",
+   "description": "Allows primary monitor on multi-screen systems to display present content when not in a video call.",
+   "symbol": "🧑‍🏫",
+   "tags": [
+    "meeting room"
+   ],
+   "folder": "Smart Dual Screen Presentation",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Smart%20Dual%20Screen%20Presentation",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "dualScreenPresentation",
+     "kind": "primary",
+     "file": "dualScreenPresentation.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "soft-mute",
+   "title": "Soft Mute",
+   "description": "Mute the device before you start a call",
+   "symbol": "🔇",
+   "tags": [
+    "calling"
+   ],
+   "folder": "Soft Mute",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Soft%20Mute",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "soft-mute",
+     "kind": "primary",
+     "file": "soft-mute.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "soft-mute",
+     "file": "soft-mute.xml"
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "speed-dials-panel",
+   "title": "Speed Dials Panel",
+   "description": "Always dialling the same few numbers from the meeting room. Maybe want to add calling 911 or the Pizza Place more prominent?",
+   "symbol": "🏎",
+   "tags": [
+    "calling"
+   ],
+   "folder": "Speed Dials Panel",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Speed%20Dials%20Panel",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "Speed Dials",
+     "kind": "primary",
+     "file": "Speed Dials.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "speeddials",
+     "file": "speed-dials.xml"
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "tictactoe",
+   "title": "TicTacToe",
+   "description": "Fun Game which allows the user to see how to update images and panels in real time with relation to user input!",
+   "symbol": "🕹",
+   "tags": [
+    "fun"
+   ],
+   "folder": "TicTacToe",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/TicTacToe",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "TicTacToe",
+     "kind": "primary",
+     "file": "TicTacToe.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "timer",
+   "title": "Timer",
+   "description": "Cisco CE Video Endpoints Macros - Timer This macro and corresponding UI Extension sample demonstrates how to add a timer application to the touch controller. The timer will show a countdown on the monitors during countdown and will play a tone at the end of the time.",
+   "symbol": "",
+   "tags": [],
+   "folder": "Timer",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Timer",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "Timer",
+     "kind": "primary",
+     "file": "Timer.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "panel_6",
+     "file": "Timer.xml",
+     "optional": false
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "unbook-empty-room",
+   "title": "Unbook Empty Room",
+   "description": "**Target :** Releasing the room when no one is attending.",
+   "symbol": "",
+   "tags": [],
+   "folder": "Unbook Empty Room",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Unbook%20Empty%20Room",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "UnbookEmptyRoom",
+     "kind": "primary",
+     "file": "UnbookEmptyRoom.js"
+    }
+   ],
+   "panels": [],
+   "params": [
+    {
+     "id": "USE_PEOPLE_COUNT_ONLY",
+     "name": "Don't use ultrasound detection",
+     "type": "bool",
+     "macro": "UnbookEmptyRoom",
+     "info": "Check this option for open meeting spaces, rooms with big glass walls etc where ultrasound does not detect people well",
+     "required": true
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "usb-mode-version-2",
+   "title": "USB Mode Version 2",
+   "description": "NEWS - USB Mode Version 2 and 3 beta are NO LONGER being worked on as Call from Laptop has replaced it, please reference the Call From laptop capabilities in the link below",
+   "symbol": "",
+   "tags": [],
+   "folder": "USB Mode Version 2",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/USB%20Mode%20Version%202",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "USB Mode Version 2",
+     "kind": "primary",
+     "file": "USB_Mode_Version_2.js"
+    }
+   ],
+   "panels": [],
+   "params": [
+    {
+     "id": "usbWelcomePrompt",
+     "name": "Enable USB Mode Welcome Prompt",
+     "type": "option",
+     "macro": "USB Mode Version 2",
+     "info": "Welcome text that guides the user every time the Enable USB Mode button is pressed",
+     "required": false,
+     "values": {
+      "true": "Enable",
+      "false": "Disable"
+     }
+    },
+    {
+     "id": "screenShare_Mode",
+     "name": "Screenshare Mode",
+     "type": "option",
+     "macro": "USB Mode Version 2",
+     "info": "Standard: (Recommended) When Enable USB Mode is pressed, your default presentation source will shared; Auto: When Enable USB Mode is pressed, your active presentation continues into USB Mode",
+     "required": false,
+     "values": {
+      "standard": "Standard",
+      "auto": "Auto"
+     }
+    },
+    {
+     "id": "continuousShare_Mode",
+     "name": "Continuous Presentation Mode",
+     "type": "option",
+     "macro": "USB Mode Version 2",
+     "info": "When USB mode is Disabled, do you want to stop or continue the active presentation?",
+     "required": false,
+     "values": {
+      "false": "Stop Presentation",
+      "true": "Continue Presentation"
+     }
+    },
+    {
+     "id": "sx80_Mx700_800_videoOutput_Override",
+     "name": "Sx80/Mx800-700 Output Override",
+     "type": "option",
+     "macro": "USB Mode Version 2",
+     "info": "Assign the Second(HDMI) or Third(DVI) output to feed into the USB Capture Device for Sx80 based CODECs",
+     "required": false,
+     "values": {
+      "Third": "Third (DVI)",
+      "Second": "Second (HDMI)"
+     }
+    }
+   ],
+   "extras": [
+    "CompatibilityMatrix/readme.md"
+   ],
+   "caution": ""
+  },
+  {
+   "id": "wallpaper-picker",
+   "title": "Wallpaper Picker",
+   "description": "Easily change the wallpaper on your RoomOS 26 device.",
+   "symbol": "🎨",
+   "tags": [
+    "home office"
+   ],
+   "folder": "Wallpaper Picker",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Wallpaper%20Picker",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "wallpaper",
+     "kind": "primary",
+     "file": "wallpaperpicker.js"
+    }
+   ],
+   "panels": [
+    {
+     "panel_id": "wallpaper-ui",
+     "file": "wallpaper.xml"
+    }
+   ],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "web-app-with-cache-management",
+   "title": "Web App with Cache Management",
+   "description": "Monitors web apps so, upon exit, a prompt appears that asks the user to clear their cached login credentials.",
+   "symbol": "🔐",
+   "tags": [
+    "meeting room",
+    "web",
+    "whiteboard"
+   ],
+   "folder": "Web App with Cache Management",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Web%20App%20with%20Cache%20Management",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "WebAppClearCache",
+     "kind": "primary",
+     "file": "WebAppClearCache.js"
+    }
+   ],
+   "panels": [],
+   "params": [
+    {
+     "id": "autoClear",
+     "name": "Automatically Clear",
+     "type": "bool",
+     "macro": "WebAppClearCache",
+     "info": "Do you want to automatically clear login data without a prompt?",
+     "required": true,
+     "default": false
+    },
+    {
+     "id": "waitTimer",
+     "name": "Prompt Countdown",
+     "type": "number",
+     "macro": "WebAppClearCache",
+     "info": "How many seconds should the prompt for clearing login display?",
+     "required": true,
+     "default": 20
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "webapps-manager",
+   "title": "WebApps Manager",
+   "description": "Cisco CE Room Devices Macros - On Device Web App Manager This macro allows simple management of ad-hoc local web apps on a device by providing a user interface to add new apps and remove existing ones.",
+   "symbol": "",
+   "tags": [],
+   "folder": "WebApps Manager",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/WebApps%20Manager",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "WebApps Manager",
+     "kind": "primary",
+     "file": "WebApps Manager.js"
+    }
+   ],
+   "panels": [],
+   "params": [],
+   "extras": [],
+   "caution": ""
+  },
+  {
+   "id": "working-from-home",
+   "title": "Working From Home",
+   "description": "Automatically set your Webex status to where you are working from.",
+   "symbol": "",
+   "tags": [],
+   "folder": "Working From Home",
+   "upstream": "https://github.com/CiscoDevNet/roomdevices-macros-samples/tree/master/Working%20From%20Home",
+   "readme": "README.md",
+   "macros": [
+    {
+     "name": "wfh",
+     "kind": "primary",
+     "file": "wfh.js"
+    }
+   ],
+   "panels": [],
+   "params": [
+    {
+     "id": "deviceStatus",
+     "name": "Status text",
+     "type": "string",
+     "macro": "wfh",
+     "info": "Will be set automatically when using the device during office hours.",
+     "required": true,
+     "default": "🏠 Working from home"
+    },
+    {
+     "id": "askBeforeChanging",
+     "name": "Ask before changing status",
+     "type": "bool",
+     "macro": "wfh",
+     "info": "Useful if eg your spouse is using the device when you are not.",
+     "required": false,
+     "default": false
+    },
+    {
+     "id": "startHour",
+     "name": "Office hour start",
+     "type": "number",
+     "macro": "wfh",
+     "info": "",
+     "required": true,
+     "default": 8
+    },
+    {
+     "id": "endHour",
+     "name": "Office hour end",
+     "type": "number",
+     "macro": "wfh",
+     "info": "",
+     "required": true,
+     "default": 16
+    }
+   ],
+   "extras": [],
+   "caution": ""
+  }
+ ]
+}

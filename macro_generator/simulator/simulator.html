@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline' blob:; frame-src about:; img-src data:;">
+<title>Virtual device - __TITLE__</title>
+<style>
+  :root {
+    --bg: #eef1f5; --card: #fff; --ink: #1d2733; --muted: #66758a; --line: #d9e0e8; --accent: #0b6bcb;
+    --ok: #1b7a2f; --warn: #b36b00; --bad: #b3261e;
+    --screen: #0d1b2a; --screen2: #1b3a5c; --tile: #26486f; --tile-hi: #3b6aa0;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font: 14px/1.4 "Segoe UI", system-ui, sans-serif; }
+  header { display: flex; align-items: center; gap: 14px; padding: 8px 14px; background: #14202e; color: #fff; flex-wrap: wrap; }
+  header h1 { font-size: 15px; margin: 0; font-weight: 600; }
+  header h1 small { font-weight: 400; opacity: .7; margin-left: 6px; }
+  .spacer { flex: 1; }
+  .clock { font: 600 15px Consolas, monospace; background: #0b141d; padding: 3px 9px; border-radius: 6px; }
+  button { font: inherit; cursor: pointer; }
+  header button, .btn { background: #26486f; color: #fff; border: 0; border-radius: 6px; padding: 5px 10px; }
+  header button:hover, .btn:hover { background: #3b6aa0; }
+  header button.on { background: #1b7a2f; }
+  header select { background: #0b141d; color: #fff; border: 1px solid #3b6aa0; border-radius: 6px; padding: 4px; }
+  main { display: grid; grid-template-columns: minmax(520px, 1.15fr) minmax(380px, 1fr); gap: 12px; padding: 12px; height: calc(100% - 50px); }
+  @media (max-width: 1000px) { main { grid-template-columns: 1fr; height: auto; } }
+  .left { display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+  #screen { position: relative; aspect-ratio: 16 / 10; width: 100%; border-radius: 14px; overflow: hidden; color: #fff;
+            background: radial-gradient(120% 120% at 20% 0%, var(--screen2), var(--screen)); box-shadow: 0 6px 22px rgba(0,0,0,.28); border: 6px solid #0a0f14; }
+  #screen .top { position: absolute; inset: 0 0 auto 0; display: flex; justify-content: space-between; padding: 12px 16px; font-size: 13px; opacity: .9; }
+  #screen .big-clock { position: absolute; left: 24px; bottom: 22px; font-size: 44px; font-weight: 200; letter-spacing: 1px; }
+  #screen .big-clock small { display: block; font-size: 14px; font-weight: 400; opacity: .75; letter-spacing: 0; }
+  .tiles { position: absolute; left: 0; right: 0; top: 24%; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; padding: 0 20px; }
+  .tile { width: 112px; height: 98px; border-radius: 14px; border: 0; background: var(--tile); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font-size: 12px; padding: 6px; }
+  .tile:hover { background: var(--tile-hi); }
+  .tile .ico { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 16px; background: rgba(255,255,255,.18); }
+  .tile .nm { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .empty-home { position: absolute; top: 34%; width: 100%; text-align: center; opacity: .7; padding: 0 30px; }
+  .callbar { position: absolute; left: 0; right: 0; bottom: 0; background: rgba(8, 20, 33, .92); padding: 8px 14px; display: flex; gap: 10px; align-items: center; }
+  .callbar .badge { background: #1b7a2f; padding: 3px 9px; border-radius: 99px; font-size: 12px; }
+  .cp { position: absolute; right: 14px; top: 38px; }
+  .cp > button { background: rgba(255,255,255,.14); border: 0; color: #fff; border-radius: 8px; padding: 5px 10px; }
+  .cp .menu { margin-top: 4px; background: #14283d; border-radius: 10px; padding: 6px; min-width: 190px; box-shadow: 0 6px 20px rgba(0,0,0,.4); }
+  .cp .menu button { display: block; width: 100%; text-align: left; background: transparent; color: #fff; border: 0; padding: 7px 10px; border-radius: 6px; }
+  .cp .menu button:hover { background: #26486f; }
+
+  .overlay { position: absolute; inset: 0; background: rgba(5, 12, 20, .72); display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .sheet { background: #f6f8fb; color: #1d2733; border-radius: 14px; width: min(560px, 100%); max-height: 100%; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,.5); }
+  .sheet > header { background: #e5ebf2; color: #1d2733; padding: 9px 14px; display: flex; align-items: center; justify-content: space-between; font-weight: 600; }
+  .sheet > header button { background: transparent; color: #1d2733; font-size: 18px; padding: 0 6px; }
+  .pagetabs { display: flex; gap: 6px; padding: 8px 14px 0; }
+  .pagetabs button { border: 1px solid var(--line); background: #fff; border-radius: 99px; padding: 3px 12px; }
+  .pagetabs button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .body { padding: 10px 14px 14px; overflow: auto; display: flex; flex-direction: column; gap: 10px; }
+  .rowname { font-size: 12px; color: var(--muted); margin-bottom: 3px; }
+  .row { display: flex; gap: 8px; align-items: center; }
+  .w { min-width: 0; }
+  .w.text { font-size: 15px; } .w.text.small { font-size: 12px; } .w.text.big { font-size: 22px; font-weight: 600; }
+  .w.text.center { text-align: center; } .w.text.right { text-align: right; }
+  .wbtn { width: 100%; border: 0; border-radius: 9px; padding: 11px 6px; background: #d4dde8; color: #1d2733; font-weight: 600; }
+  .wbtn:active, .wbtn.active { background: var(--accent); color: #fff; }
+  .wbtn.grp.on { background: var(--accent); color: #fff; }
+  .switch { position: relative; width: 52px; height: 28px; background: #b8c3d1; border-radius: 99px; border: 0; padding: 0; margin: 0 auto; display: block; }
+  .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: left .15s; }
+  .switch.on { background: var(--ok); } .switch.on::after { left: 27px; }
+  .w input[type=range] { width: 100%; }
+  .spin { display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .spin button { width: 38px; height: 34px; border: 0; border-radius: 8px; background: #d4dde8; font-size: 18px; }
+  .dpad { display: grid; grid-template-columns: repeat(3, 40px); grid-template-rows: repeat(3, 36px); gap: 4px; margin: 0 auto; }
+  .dpad button { border: 0; border-radius: 8px; background: #d4dde8; }
+  .unknown { font-size: 12px; color: var(--warn); border: 1px dashed var(--warn); border-radius: 6px; padding: 3px 6px; }
+  .dlg { text-align: left; } .dlg h3 { margin: 0; padding: 14px 16px 4px; } .dlg p { margin: 0; padding: 4px 16px 12px; white-space: pre-wrap; }
+  .dlg .opts { display: flex; flex-direction: column; gap: 6px; padding: 0 16px 16px; }
+  .dlg .opts button, .dlg input { padding: 10px; border-radius: 8px; border: 1px solid var(--line); font: inherit; }
+  .dlg .opts button { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .dlg .opts button.sec { background: #fff; color: var(--ink); border-color: var(--line); }
+  .wv { padding: 14px 16px; } .wv code { word-break: break-all; display: block; background: #e5ebf2; padding: 6px 8px; border-radius: 6px; margin: 6px 0; }
+
+  .quick { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .quick .btn { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+  .quick .btn.on { background: var(--ok); color: #fff; border-color: var(--ok); }
+  .quick small { color: var(--muted); }
+  .hint { color: var(--muted); font-size: 12px; }
+
+  .right { display: flex; flex-direction: column; background: var(--card); border-radius: 12px; border: 1px solid var(--line); min-height: 0; overflow: hidden; }
+  .tabs { display: flex; border-bottom: 1px solid var(--line); background: #f6f8fb; }
+  .tabs button { border: 0; background: transparent; padding: 9px 13px; color: var(--muted); border-bottom: 2px solid transparent; }
+  .tabs button.on { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
+  .tabs .count { background: var(--bad); color: #fff; border-radius: 99px; padding: 0 6px; font-size: 11px; margin-left: 4px; }
+  .pane { display: none; flex: 1; min-height: 0; overflow: auto; padding: 10px; }
+  .pane.on { display: block; }
+  .toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+  .toolbar input[type=text], input.f, textarea.f, select.f { border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; font: inherit; }
+  textarea.f { width: 100%; font-family: Consolas, monospace; min-height: 90px; }
+  .call { border-bottom: 1px solid #eef1f5; font-size: 12.5px; }
+  .call summary { cursor: pointer; padding: 3px 0; list-style: none; display: flex; gap: 8px; align-items: baseline; }
+  .call summary::-webkit-details-marker { display: none; }
+  .call .t { color: var(--muted); font-family: Consolas, monospace; font-size: 11.5px; }
+  .call .k { font: 700 10px Consolas, monospace; padding: 1px 5px; border-radius: 4px; color: #fff; }
+  .k-command { background: #0b6bcb; } .k-event { background: #7b3fb5; } .k-http { background: #0a7f7f; } .k-config { background: #8a6d00; } .k-status { background: #55677c; }
+  .call .p { font-weight: 600; word-break: break-all; }
+  .call .a { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 48%; }
+  .call pre { margin: 2px 0 8px; background: #f3f6fa; padding: 8px; border-radius: 6px; overflow: auto; font-size: 12px; }
+  .line { font: 12.5px Consolas, monospace; padding: 2px 0; border-bottom: 1px solid #f1f4f8; white-space: pre-wrap; word-break: break-word; }
+  .line.error { color: var(--bad); } .line.warn { color: var(--warn); } .line.debug { color: var(--muted); } .line.sys { color: var(--accent); }
+  table.grid { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  table.grid th { text-align: left; color: var(--muted); font-weight: 600; padding: 4px; border-bottom: 1px solid var(--line); }
+  table.grid td { padding: 2px 4px; border-bottom: 1px solid #f1f4f8; vertical-align: middle; }
+  table.grid input { width: 100%; border: 1px solid transparent; background: transparent; padding: 3px 4px; font: inherit; border-radius: 4px; }
+  table.grid input:hover, table.grid input:focus { border-color: var(--line); background: #fff; }
+  tr.miss td { background: #fff6e5; }
+  .empty { color: var(--muted); padding: 18px 6px; text-align: center; }
+  .loaded { font-size: 12px; margin-bottom: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { border-radius: 99px; padding: 1px 9px; background: #e3f4e7; color: var(--ok); }
+  .chip.bad { background: #fde8e6; color: var(--bad); }
+  .note { font-size: 12px; color: var(--muted); margin: 6px 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Virtual device<small id="subtitle"></small></h1>
+  <span class="spacer"></span>
+  <span class="clock" id="clock" title="Virtual time - macros see this clock">--:--:--</span>
+  <button data-adv="10000">+10 s</button>
+  <button data-adv="60000">+1 min</button>
+  <button data-adv="300000">+5 min</button>
+  <button data-adv="3600000">+1 h</button>
+  <button id="play" title="Let virtual time run on its own">&#9654; Run</button>
+  <select id="speed" title="Run speed"><option value="1">1x</option><option value="10">10x</option><option value="60" selected>60x</option><option value="600">600x</option></select>
+  <button id="reload" title="Restart the macros from scratch">&#8635; Restart</button>
+</header>
+<main>
+  <section class="left">
+    <div id="screen"></div>
+    <div class="quick" id="quick"></div>
+    <div class="hint">Everything here is simulated: macros run in a sandbox with no network access, against a fake <code>xapi</code> and a virtual clock. It shows what a macro asks the device to do - it is not a substitute for a test on real hardware.</div>
+  </section>
+  <section class="right">
+    <div class="tabs" id="tabs"></div>
+    <div class="pane" id="pane-calls"></div>
+    <div class="pane" id="pane-console"></div>
+    <div class="pane" id="pane-events"></div>
+    <div class="pane" id="pane-state"></div>
+    <div class="pane" id="pane-http"></div>
+  </section>
+</main>
+
+<script>
+const BUNDLE = /*__BUNDLE__*/;
+const RUNTIME_SRC = /*__RUNTIME__*/;
+
+/* ================================================================ helpers */
+const $ = (sel, root = document) => root.querySelector(sel);
+function el(tag, props = {}, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(props)) {
+    if (k === 'class') e.className = v;
+    else if (k === 'text') e.textContent = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
+    else if (v !== false && v != null) e.setAttribute(k, v === true ? '' : v);
+  }
+  kids.flat().forEach((k) => e.append(k));
+  return e;
+}
+const pad = (n) => String(n).padStart(2, '0');
+const hms = (ms) => { const d = new Date(ms); return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`; };
+const short = (v, n = 90) => { let s; try { s = typeof v === 'string' ? v : JSON.stringify(v); } catch { s = String(v); } s = s === undefined ? '' : s; return s.length > n ? s.slice(0, n) + '…' : s; };
+const pretty = (v) => { try { return typeof v === 'string' ? v : JSON.stringify(v, null, 2); } catch { return String(v); } };
+const parseValue = (text) => { const t = String(text).trim(); if (t === '') return ''; try { return JSON.parse(t); } catch { return t; } };
+const parseOptions = (text) => Object.fromEntries(String(text || '').split(';').filter(Boolean).map((p) => { const i = p.indexOf('='); return i < 0 ? [p, true] : [p.slice(0, i).trim(), p.slice(i + 1).trim()]; }));
+
+/* ================================================================ state */
+const S = {
+  calls: [], lines: [], panels: new Map(), widgets: new Map(), state: new Map(), misses: new Set(),
+  open: null, dialogs: [], webview: null, loaded: [], errors: 0,
+  now: Date.now(), frame: null, ready: false, advancing: false, playTimer: null,
+  httpRules: JSON.parse(JSON.stringify(BUNDLE.httpRules)), cpOpen: false,
+};
+const widgetEls = new Map();      // widget id -> [updater(value)]
+let readyResolve; let ready = new Promise((r) => { readyResolve = r; });
+let advanceWaiters = [];
+
+/* ================================================================ runtime frame */
+function startRuntime() {
+  if (S.frame) S.frame.remove();
+  S.ready = false; S.loaded = []; ready = new Promise((r) => { readyResolve = r; });
+  const frame = document.createElement('iframe');
+  frame.setAttribute('sandbox', 'allow-scripts');
+  // Not display:none - browsers throttle hidden frames. A 2px, almost transparent frame in the corner stays "visible".
+  frame.setAttribute('title', 'macro sandbox');
+  frame.style.cssText = 'position:fixed;right:0;bottom:0;width:2px;height:2px;border:0;opacity:.01;pointer-events:none';
+  // No network of any kind (default-src 'none'); only inline script and blob: modules, which is how macros are loaded.
+  frame.srcdoc = '<!DOCTYPE html><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; script-src \'unsafe-inline\' blob:;">' +
+                 '<script>' + RUNTIME_SRC.replace(/<\/script/gi, '<\\/script') + '<\/script>';
+  S.frame = frame;
+  document.body.append(frame);
+}
+const toRuntime = (m) => S.frame && S.frame.contentWindow && S.frame.contentWindow.postMessage(m, '*');
+
+window.addEventListener('message', (ev) => {
+  if (!S.frame || ev.source !== S.frame.contentWindow) return;
+  const m = ev.data || {};
+  switch (m.type) {
+    case 'booted': {
+      const state = {}; S.state.forEach((v, k) => { state[k] = v; });
+      toRuntime({ type: 'init', macros: BUNDLE.macros, state, httpRules: S.httpRules });
+      break;
+    }
+    case 'ready': S.ready = true; S.now = m.now; updateClock(); render(); readyResolve(); break;
+    case 'time': S.now = m.now; S.advancing = false; updateClock(); advanceWaiters.splice(0).forEach((r) => r()); break;
+    case 'call': addCall(m); if (m.kind === 'command') applyCommand(m); break;
+    case 'http': addCall({ kind: 'http', path: `${m.method} ${m.url}`, params: { headers: m.headers, body: m.body, matchedRule: m.rule, status: m.status, reply: m.reply }, t: m.t }); break;
+    case 'console': addLine(m.level, m.text, m.t); if (m.level === 'error') bumpErrors(); break;
+    case 'state': onState(m); break;
+    case 'miss': S.misses.add(m.key); addLine('warn', `Macro read ${m.key}, which this simulator does not know - it got "". Define it on the State tab.`); refreshTabs(); if (tabActive('state')) renderState(); break;
+    case 'loaded':
+      S.loaded.push(m);
+      if (!m.ok) { addLine('error', `Macro "${m.name}" failed to load: ${m.error}`); bumpErrors(); }
+      break;
+    default: break;
+  }
+});
+
+function bumpErrors() { S.errors += 1; refreshTabs(); }
+
+/* ================================================================ log + tabs */
+function addCall(c) {
+  S.calls.push({ ...c, t: c.t ?? S.now });
+  if (S.calls.length > 3000) S.calls.splice(0, 500);
+  if (tabActive('calls')) renderCalls();
+}
+function addLine(level, text, t) {
+  S.lines.push({ level, text, t: t ?? S.now });
+  if (S.lines.length > 3000) S.lines.splice(0, 500);
+  if (tabActive('console')) renderConsole();
+}
+const TABS = [['calls', 'xAPI calls'], ['console', 'Console'], ['events', 'Fire events'], ['state', 'State'], ['http', 'HTTP replies']];
+let activeTab = 'calls';
+const tabActive = (id) => activeTab === id;
+function refreshTabs() {
+  const bar = $('#tabs'); bar.textContent = '';
+  for (const [id, label] of TABS) {
+    const b = el('button', { class: id === activeTab ? 'on' : '', onclick: () => selectTab(id) }, label);
+    if (id === 'console' && S.errors) b.append(el('span', { class: 'count', text: String(S.errors) }));
+    if (id === 'state' && S.misses.size) b.append(el('span', { class: 'count', text: String(S.misses.size) }));
+    bar.append(b);
+  }
+}
+function selectTab(id) {
+  activeTab = id;
+  document.querySelectorAll('.pane').forEach((p) => p.classList.toggle('on', p.id === 'pane-' + id));
+  refreshTabs();
+  ({ calls: renderCalls, console: renderConsole, events: renderEvents, state: renderState, http: renderHttp })[id]();
+}
+
+/* ---- calls */
+const callFilter = { text: '', kinds: new Set(['command', 'event', 'http', 'config', 'status']) };
+function renderCalls() {
+  const pane = $('#pane-calls');
+  const keep = pane.querySelector('input[type=text]');
+  if (!keep) {
+    pane.textContent = '';
+    const kinds = el('span', { class: 'toolbar' });
+    for (const k of ['command', 'event', 'http', 'config', 'status']) {
+      kinds.append(el('label', {}, el('input', { type: 'checkbox', checked: true, onchange: (e) => { e.target.checked ? callFilter.kinds.add(k) : callFilter.kinds.delete(k); renderCalls(); } }), ' ' + k + '  '));
+    }
+    pane.append(el('div', { class: 'toolbar' },
+      el('input', { type: 'text', placeholder: 'filter…', oninput: (e) => { callFilter.text = e.target.value.toLowerCase(); renderCalls(); } }),
+      kinds,
+      el('button', { class: 'btn', onclick: () => { S.calls = []; renderCalls(); } }, 'Clear'),
+      el('button', { class: 'btn', onclick: copyCalls }, 'Copy')),
+      el('div', { id: 'calls-list' }));
+  }
+  const list = $('#calls-list'); list.textContent = '';
+  const rows = S.calls.filter((c) => callFilter.kinds.has(c.kind) && (!callFilter.text || (c.path + ' ' + short(c.params, 400)).toLowerCase().includes(callFilter.text)));
+  if (!rows.length) list.append(el('div', { class: 'empty', text: S.calls.length ? 'Nothing matches the filter.' : 'Nothing yet - the macros have not called the device.' }));
+  rows.slice(-400).forEach((c) => {
+    const detail = [c.params !== undefined ? pretty(c.params) : '', c.body ? '\n--- body ---\n' + pretty(c.body) : ''].join('');
+    list.append(el('details', { class: 'call' },
+      el('summary', {}, el('span', { class: 't', text: hms(c.t) }), el('span', { class: 'k k-' + c.kind, text: c.kind.toUpperCase().slice(0, 4) }), el('span', { class: 'p', text: c.path }), el('span', { class: 'a', text: short(c.params, 70) })),
+      el('pre', { text: detail || '(no arguments)' })));
+  });
+  list.scrollTop = list.scrollHeight; pane.scrollTop = pane.scrollHeight;
+}
+function copyCalls() {
+  const text = S.calls.map((c) => `${hms(c.t)} ${c.kind.toUpperCase()} ${c.path} ${short(c.params, 300)}`).join('\n');
+  navigator.clipboard && navigator.clipboard.writeText(text).catch(() => {});
+}
+
+/* ---- console */
+function renderConsole() {
+  const pane = $('#pane-console'); pane.textContent = '';
+  pane.append(el('div', { class: 'toolbar' }, el('button', { class: 'btn', onclick: () => { S.lines = []; S.errors = 0; refreshTabs(); renderConsole(); } }, 'Clear')));
+  const loaded = el('div', { class: 'loaded' });
+  S.loaded.forEach((m) => loaded.append(el('span', { class: 'chip' + (m.ok ? '' : ' bad'), text: (m.ok ? '✓ ' : '✗ ') + m.name })));
+  pane.append(loaded);
+  if (!S.lines.length) pane.append(el('div', { class: 'empty', text: 'No console output.' }));
+  S.lines.slice(-500).forEach((l) => pane.append(el('div', { class: 'line ' + l.level, text: `${hms(l.t)}  ${l.text}` })));
+  pane.scrollTop = pane.scrollHeight;
+}
+
+/* ---- fire events */
+function renderEvents() {
+  const pane = $('#pane-events'); pane.textContent = '';
+  const select = el('select', { class: 'f' }, el('option', { value: '', text: 'Choose an event…' }));
+  BUNDLE.presets.forEach((p, i) => select.append(el('option', { value: String(i), text: p.label })));
+  const path = el('input', { class: 'f', type: 'text', style: 'width:100%', placeholder: 'Event path, e.g. Event.Bookings.Start' });
+  const payload = el('textarea', { class: 'f', spellcheck: 'false', placeholder: '{ "Id": "B1" }' });
+  select.addEventListener('change', () => { const p = BUNDLE.presets[select.value]; if (p) { path.value = p.path; payload.value = JSON.stringify(p.payload, null, 2); } });
+  pane.append(
+    el('div', { class: 'note', text: 'Make something happen on the device: macros that subscribed to the event will react.' }),
+    select, el('div', { style: 'height:6px' }), path, el('div', { style: 'height:6px' }), payload,
+    el('div', { style: 'margin-top:8px' }, el('button', { class: 'btn', style: 'background:#0b6bcb;color:#fff;border:0', onclick: () => {
+      let data; try { data = payload.value.trim() ? JSON.parse(payload.value) : {}; } catch (e) { addLine('error', 'Event payload is not valid JSON: ' + e.message); return; }
+      fireEvent(path.value.trim(), data);
+    } }, 'Fire event')));
+}
+function fireEvent(path, payload) {
+  if (!/^Event\./i.test(path)) path = 'Event.' + path;
+  toRuntime({ type: 'emit', path, payload });
+}
+
+/* ---- state */
+function renderState() {
+  const pane = $('#pane-state'); pane.textContent = '';
+  const table = el('table', { class: 'grid' }, el('tr', {}, el('th', { text: 'Key' }), el('th', { text: 'Value (JSON or text)' })));
+  const row = (key, value, miss) => {
+    const input = el('input', { value: value === undefined ? '' : (typeof value === 'string' ? value : JSON.stringify(value)), spellcheck: 'false' });
+    input.addEventListener('change', () => setUserState(key, parseValue(input.value)));
+    return el('tr', { class: miss ? 'miss' : '' }, el('td', { text: key }), el('td', {}, input));
+  };
+  [...S.misses].filter((k) => !S.state.has(k)).sort().forEach((k) => table.append(row(k, '', true)));
+  [...S.state.keys()].sort().forEach((k) => table.append(row(k, S.state.get(k), false)));
+  const newKey = el('input', { class: 'f', type: 'text', placeholder: 'Status.Audio.Volume' });
+  const newVal = el('input', { class: 'f', type: 'text', placeholder: 'value' });
+  pane.append(
+    el('div', { class: 'note', text: 'What the macros read with xapi.Status…get() / xapi.Config…get(). Edit a value and subscribed macros are notified. Orange rows are things a macro asked for that were not defined.' }),
+    el('div', { class: 'toolbar' }, newKey, newVal, el('button', { class: 'btn', style: 'background:#0b6bcb;color:#fff;border:0', onclick: () => { if (newKey.value.trim()) { setUserState(newKey.value.trim(), parseValue(newVal.value)); renderState(); } } }, 'Add / set')),
+    table);
+}
+function setUserState(key, value) { S.misses.delete(key); S.state.set(key, value); toRuntime({ type: 'setState', key, value }); }
+function onState(m) {
+  S.state.set(m.key, m.value); S.misses.delete(m.key);
+  if (m.by === 'macro') addCall({ kind: m.key.startsWith('Config.') ? 'config' : 'status', path: m.key + ' =', params: m.value });
+  if (m.key === 'Status.SystemUnit.State.NumberOfActiveCalls' || m.key.startsWith('Status.UserInterface.ContactInfo') || m.key.startsWith('Status.RoomAnalytics.PeoplePresence')) { render(); renderQuick(); }
+  if (tabActive('state')) renderState();
+}
+
+/* ---- http rules */
+function renderHttp() {
+  const pane = $('#pane-http'); pane.textContent = '';
+  const sync = () => toRuntime({ type: 'httpRules', rules: S.httpRules });
+  const table = el('table', { class: 'grid' }, el('tr', {}, el('th', { text: 'URL contains (* = anything)' }), el('th', { text: 'Status or "error"' }), el('th', { text: 'Reply body' }), el('th', { text: '' })));
+  S.httpRules.forEach((r, i) => {
+    const bind = (field, extra = {}) => { const inp = el('input', { value: r[field], spellcheck: 'false', ...extra }); inp.addEventListener('change', () => { r[field] = field === 'status' && /^\d+$/.test(inp.value.trim()) ? Number(inp.value) : inp.value; sync(); }); return inp; };
+    table.append(el('tr', {}, el('td', {}, bind('match')), el('td', { style: 'width:90px' }, bind('status')), el('td', {}, bind('body')),
+      el('td', {}, el('button', { class: 'btn', style: 'padding:1px 7px;background:#fff;color:#b3261e;border:1px solid #d9e0e8', onclick: () => { S.httpRules.splice(i, 1); sync(); renderHttp(); } }, '✕'))));
+  });
+  pane.append(
+    el('div', { class: 'note', text: 'What the fake network answers when a macro calls xapi.Command.HttpClient.*. The first matching rule wins; nothing leaves your computer.' }),
+    table,
+    el('div', { class: 'toolbar', style: 'margin-top:8px' }, el('button', { class: 'btn', style: 'background:#0b6bcb;color:#fff;border:0', onclick: () => { S.httpRules.splice(S.httpRules.length - 1, 0, { match: 'https://', status: 200, body: '{"on": true}' }); sync(); renderHttp(); } }, 'Add rule')));
+}
+
+/* ================================================================ panels (UI extensions) */
+const text = (node, tag) => { const c = node.querySelector(':scope > ' + tag); return c ? c.textContent.trim() : ''; };
+function parsePanels(xml) {
+  const doc = new DOMParser().parseFromString(xml, 'application/xml');
+  if (doc.querySelector('parsererror')) throw new Error('panel XML is not well-formed');
+  return [...doc.querySelectorAll('Extensions > Panel')].map((p) => ({
+    id: text(p, 'PanelId'), name: text(p, 'Name'), color: text(p, 'Color'), icon: text(p, 'Icon'), order: Number(text(p, 'Order')) || 99,
+    location: text(p, 'Location'), type: text(p, 'Type'),
+    pages: [...p.querySelectorAll(':scope > Page')].map((pg) => ({
+      id: text(pg, 'PageId'), name: text(pg, 'Name'), options: parseOptions(text(pg, 'Options')),
+      rows: [...pg.querySelectorAll(':scope > Row')].map((r) => ({
+        name: text(r, 'Name'),
+        widgets: [...r.querySelectorAll(':scope > Widget')].map((w) => ({
+          id: text(w, 'WidgetId'), type: text(w, 'Type'), name: text(w, 'Name'), options: parseOptions(text(w, 'Options')),
+          values: [...w.querySelectorAll(':scope > ValueSpace > Value')].map((v) => ({ key: text(v, 'Key'), name: text(v, 'Name') })),
+        })),
+      })),
+    })),
+  }));
+}
+function savePanels(list, replaceAll) {
+  if (replaceAll) S.panels.clear();
+  list.forEach((p) => { if (p.id) S.panels.set(p.id, p); else addLine('warn', 'A panel was saved without a PanelId.'); });
+  if (S.open && !S.panels.has(S.open.id)) S.open = null;
+}
+const showsOnHome = (p) => ['HomeScreen', 'HomeScreenAndCallControls'].includes(p.location) || ['Home', 'Global'].includes(p.type);
+const showsInCall = (p) => ['CallControls', 'HomeScreenAndCallControls'].includes(p.location) || ['InCall', 'Global'].includes(p.type);
+const showsInPanel = (p) => ['ControlPanel'].includes(p.location) || p.type === 'Statusbar';
+const isInCall = () => Number(S.state.get('Status.SystemUnit.State.NumberOfActiveCalls')) > 0;
+
+function applyCommand(c) {
+  const p = c.params || {}; const path = c.path.toLowerCase();
+  const ui = 'userinterface.';
+  try {
+    if (path === ui + 'extensions.panel.save') { savePanels(parsePanels(String(c.body || ''))); }
+    else if (path === ui + 'extensions.set') { savePanels(parsePanels(String(c.body || '')), true); }
+    else if (path === ui + 'extensions.clear') { S.panels.clear(); S.open = null; }
+    else if (path === ui + 'extensions.panel.remove') { S.panels.delete(p.PanelId); if (S.open && S.open.id === p.PanelId) S.open = null; }
+    else if (path === ui + 'extensions.panel.update') {
+      const panel = S.panels.get(p.PanelId);
+      if (panel) { if (p.Name) panel.name = p.Name; if (p.Color) panel.color = p.Color; if (p.Icon) panel.icon = p.Icon; if (p.Location) panel.location = p.Location; if (p.Order) panel.order = Number(p.Order); }
+    }
+    else if (path === ui + 'extensions.panel.open') { openPanel(p.PanelId, p.PageId, true); return; }
+    else if (path === ui + 'extensions.panel.close') { S.open = null; }
+    else if (path === ui + 'extensions.widget.setvalue') { setWidgetValue(p.WidgetId, p.Value); return; }
+    else if (path === ui + 'extensions.widget.unsetvalue') { setWidgetValue(p.WidgetId, undefined); return; }
+    else if (path === ui + 'message.alert.display') { pushDialog({ kind: 'alert', title: p.Title, text: p.Text, duration: Number(p.Duration) || 0 }); }
+    else if (path === ui + 'message.alert.clear') { S.dialogs = S.dialogs.filter((d) => d.kind !== 'alert'); }
+    else if (path === ui + 'message.prompt.display') {
+      const options = []; for (let i = 1; i <= 5; i++) if (p['Option.' + i]) options.push({ id: i, label: p['Option.' + i] });
+      pushDialog({ kind: 'prompt', title: p.Title, text: p.Text, feedback: p.FeedbackId, options });
+    }
+    else if (path === ui + 'message.prompt.clear') { S.dialogs = S.dialogs.filter((d) => d.kind !== 'prompt' || (p.FeedbackId && d.feedback !== p.FeedbackId)); }
+    else if (path === ui + 'message.textinput.display') { pushDialog({ kind: 'text', title: p.Title, text: p.Text, feedback: p.FeedbackId, placeholder: p.Placeholder, submit: p.SubmitText || 'Submit', initial: p.InputText || '' }); }
+    else if (path === ui + 'message.textinput.clear') { S.dialogs = S.dialogs.filter((d) => d.kind !== 'text'); }
+    else if (path === ui + 'webview.display') { S.webview = { url: String(p.Url || ''), title: p.Title || '', mode: p.Mode || '' }; }
+    else if (path === ui + 'webview.clear') { S.webview = null; }
+    else return;
+  } catch (e) { addLine('error', `Could not apply ${c.path}: ${e.message}`); bumpErrors(); }
+  render();
+}
+
+/* ================================================================ widgets */
+function initialWidgetValue(w) {
+  return { Slider: '0', ToggleButton: 'off', GroupButton: '', Spinner: '0', Text: w.name }[w.type];
+}
+function widgetValue(w) { return S.widgets.has(w.id) ? S.widgets.get(w.id) : initialWidgetValue(w); }
+function setWidgetValue(id, value) {
+  if (value === undefined) S.widgets.delete(id); else S.widgets.set(id, String(value));
+  (widgetEls.get(id) || []).forEach((update) => update(value === undefined ? undefined : String(value)));
+}
+const act = (WidgetId, Type, Value) => fireEvent('Event.UserInterface.Extensions.Widget.Action', { WidgetId, Type, Value: Value === undefined ? '' : String(Value) });
+function register(id, update) { if (!widgetEls.has(id)) widgetEls.set(id, []); widgetEls.get(id).push(update); }
+
+function buildWidget(w, hideNames) {
+  const size = Number(w.options.size) || 1;
+  const box = el('div', { class: 'w', style: `flex:${size} 1 0` });
+  switch (w.type) {
+    case 'Text': {
+      const t = el('div', { class: `w text ${w.options.fontSize || ''} ${w.options.align || ''}`, text: w.name });
+      register(w.id, (v) => { t.textContent = v === undefined ? w.name : v; });
+      t.textContent = widgetValue(w) ?? w.name;
+      t.style.flex = `${size} 1 0`;
+      return t;
+    }
+    case 'Button': case 'IconButton': {
+      const b = el('button', { class: 'wbtn', text: w.type === 'IconButton' ? (w.options.icon || '●') : w.name });
+      let down = false;
+      b.addEventListener('pointerdown', () => { down = true; act(w.id, 'pressed'); });
+      b.addEventListener('pointerup', () => { if (down) { down = false; act(w.id, 'released'); act(w.id, 'clicked'); } });
+      b.addEventListener('pointerleave', () => { if (down) { down = false; act(w.id, 'released'); } });
+      register(w.id, (v) => b.classList.toggle('active', v === 'active'));
+      if (S.widgets.get(w.id) === 'active') b.classList.add('active');
+      box.append(b); return box;
+    }
+    case 'ToggleButton': {
+      const b = el('button', { class: 'switch', 'aria-label': w.name });
+      const set = (v) => b.classList.toggle('on', v === 'on');
+      set(widgetValue(w));
+      b.addEventListener('click', () => { const next = b.classList.contains('on') ? 'off' : 'on'; set(next); S.widgets.set(w.id, next); act(w.id, 'changed', next); });
+      register(w.id, set); box.append(b); return box;
+    }
+    case 'Slider': {
+      const r = el('input', { type: 'range', min: 0, max: 255, value: widgetValue(w) });
+      let last = 0;
+      r.addEventListener('pointerdown', () => act(w.id, 'pressed', r.value));
+      r.addEventListener('input', () => { S.widgets.set(w.id, r.value); const n = Date.now(); if (n - last > 120) { last = n; act(w.id, 'changed', r.value); } });
+      r.addEventListener('change', () => { act(w.id, 'changed', r.value); act(w.id, 'released', r.value); });
+      register(w.id, (v) => { r.value = v === undefined ? 0 : v; });
+      box.append(r); return box;
+    }
+    case 'GroupButton': {
+      const wrap = el('div', { style: 'display:flex;gap:6px;flex-wrap:wrap' });
+      const buttons = w.values.map((v) => {
+        const b = el('button', { class: 'wbtn grp', text: v.name, style: 'flex:1 1 70px;width:auto' });
+        b.dataset.key = v.key;
+        b.addEventListener('click', () => { setWidgetValue(w.id, v.key); act(w.id, 'pressed', v.key); act(w.id, 'released', v.key); });
+        return b;
+      });
+      const mark = (val) => buttons.forEach((b) => b.classList.toggle('on', b.dataset.key === val));
+      mark(widgetValue(w)); register(w.id, mark); wrap.append(...buttons); box.append(wrap); return box;
+    }
+    case 'Spinner': {
+      const value = el('span', { text: widgetValue(w) });
+      const step = (dir) => () => { const n = Number(S.widgets.get(w.id) ?? 0) + (dir === 'increment' ? 1 : -1); S.widgets.set(w.id, String(n)); value.textContent = n; act(w.id, 'clicked', dir); };
+      register(w.id, (v) => { value.textContent = v === undefined ? '0' : v; });
+      box.append(el('div', { class: 'spin' }, el('button', { text: '−', onclick: step('decrement') }), value, el('button', { text: '+', onclick: step('increment') }))); return box;
+    }
+    case 'DirectionalPad': {
+      const pad = el('div', { class: 'dpad' });
+      const cells = [[null, 'up', null], ['left', 'center', 'right'], [null, 'down', null]].flat();
+      const glyph = { up: '▲', down: '▼', left: '◀', right: '▶', center: '●' };
+      cells.forEach((d) => { if (!d) { pad.append(el('span')); return; } const b = el('button', { text: glyph[d] }); b.addEventListener('pointerdown', () => act(w.id, 'pressed', d)); b.addEventListener('pointerup', () => { act(w.id, 'released', d); act(w.id, 'clicked', d); }); pad.append(b); });
+      box.append(pad); return box;
+    }
+    case 'Spacer': return box;
+    default: box.append(el('div', { class: 'unknown', text: `(${w.type || 'unknown'} widget not drawn)` })); return box;
+  }
+}
+
+/* ================================================================ screen */
+function openPanel(id, pageId, silent) {
+  const panel = S.panels.get(id);
+  if (!panel) { addLine('warn', `Panel.Open: no panel with id "${id}".`); return; }
+  if (!panel.pages.length) return;
+  const index = Math.max(0, panel.pages.findIndex((pg) => pg.id && pg.id === pageId));
+  S.open = { id, page: index };
+  fireEvent('Event.UserInterface.Extensions.Event.PageOpened', { PageId: panel.pages[index].id || panel.pages[index].name });
+  render();
+}
+function closePanel() {
+  if (!S.open) return;
+  const panel = S.panels.get(S.open.id); const page = panel && panel.pages[S.open.page];
+  S.open = null; render();
+  fireEvent('Event.UserInterface.Extensions.Event.PageClosed', { PageId: page ? (page.id || page.name) : '' });
+}
+function clickPanel(id) {
+  fireEvent('Event.UserInterface.Extensions.Panel.Clicked', { PanelId: id });
+  S.cpOpen = false;
+  const panel = S.panels.get(id);
+  if (panel && panel.pages.length) openPanel(id);
+}
+function pushDialog(d) {
+  d.uid = Math.random().toString(36).slice(2);
+  S.dialogs = S.dialogs.filter((x) => !(x.kind === d.kind && x.feedback && x.feedback === d.feedback));
+  S.dialogs.push(d);
+  if (d.kind === 'alert') setTimeout(() => { S.dialogs = S.dialogs.filter((x) => x.uid !== d.uid); render(); }, Math.min(Math.max(d.duration || 5, 2), 12) * 1000);
+}
+
+function tile(p) {
+  const color = /^#[0-9a-f]{3,8}$/i.test(p.color) ? p.color : null;
+  return el('button', { class: 'tile', title: p.id, onclick: () => clickPanel(p.id) },
+    el('span', { class: 'ico', style: color ? `background:${color}` : '', text: (p.name || p.id || '?').slice(0, 1).toUpperCase() }),
+    el('span', { class: 'nm', text: p.name || p.id }));
+}
+
+function render() {
+  const screen = $('#screen'); screen.textContent = '';
+  widgetEls.clear();
+  if (S.open && !S.panels.has(S.open.id)) S.open = null;
+  const name = S.state.get('Status.UserInterface.ContactInfo.Name') || 'Virtual device';
+  const inCall = isInCall();
+  const all = [...S.panels.values()].sort((a, b) => a.order - b.order);
+
+  screen.append(el('div', { class: 'top' }, el('span', { text: String(name) }), el('span', { text: S.state.get('Status.SystemUnit.ProductId') || '' })));
+  const home = all.filter(showsOnHome);
+  if (inCall) {
+    screen.append(el('div', { class: 'empty-home', text: 'In call' }));
+  } else if (home.length) {
+    screen.append(el('div', { class: 'tiles' }, home.map(tile)));
+  } else {
+    screen.append(el('div', { class: 'empty-home', text: S.ready ? 'No panels on the home screen yet. Macros add them with Panel.Save.' : 'Starting macros…' }));
+  }
+  const when = new Date(S.now);
+  screen.append(el('div', { class: 'big-clock' }, el('span', { id: 'bigtime', text: `${pad(when.getHours())}:${pad(when.getMinutes())}` }), el('small', { id: 'bigdate', text: when.toDateString() })));
+
+  const drawer = all.filter(showsInPanel);
+  if (drawer.length) {
+    const cp = el('div', { class: 'cp' }, el('button', { onclick: () => { S.cpOpen = !S.cpOpen; render(); } }, '⚙ Control panel'));
+    if (S.cpOpen) cp.append(el('div', { class: 'menu' }, drawer.map((p) => el('button', { text: p.name || p.id, onclick: () => clickPanel(p.id) }))));
+    screen.append(cp);
+  }
+  if (inCall) {
+    screen.append(el('div', { class: 'callbar' }, el('span', { class: 'badge', text: 'In call' }),
+      all.filter(showsInCall).map((p) => el('button', { class: 'btn', text: p.name || p.id, onclick: () => clickPanel(p.id) })),
+      el('span', { class: 'spacer' }), el('button', { class: 'btn', style: 'background:#b3261e', text: 'End call', onclick: () => endCall() })));
+  }
+
+  if (S.open) screen.append(pageOverlay());
+  if (S.webview) screen.append(webviewOverlay());
+  S.dialogs.forEach((d) => screen.append(dialogOverlay(d)));
+}
+
+function pageOverlay() {
+  const panel = S.panels.get(S.open.id); const page = panel.pages[S.open.page];
+  const hideNames = page.options.hideRowNames === '1' || page.options.hideRowNames === true;
+  const body = el('div', { class: 'body' });
+  page.rows.forEach((row) => {
+    const wrap = el('div');
+    if (row.name && !hideNames) wrap.append(el('div', { class: 'rowname', text: row.name }));
+    wrap.append(el('div', { class: 'row' }, row.widgets.map((w) => buildWidget(w, hideNames))));
+    body.append(wrap);
+  });
+  const tabs = panel.pages.length > 1 ? el('div', { class: 'pagetabs' }, panel.pages.map((pg, i) => el('button', { class: i === S.open.page ? 'on' : '', text: pg.name || `Page ${i + 1}`, onclick: () => { S.open.page = i; render(); } }))) : null;
+  return el('div', { class: 'overlay' }, el('div', { class: 'sheet' },
+    el('header', {}, el('span', { text: page.name || panel.name }), el('button', { text: '✕', title: 'Close', onclick: closePanel })), tabs, body));
+}
+function dialogOverlay(d) {
+  const close = () => { S.dialogs = S.dialogs.filter((x) => x !== d); render(); };
+  const sheet = el('div', { class: 'sheet dlg' }, d.title ? el('h3', { text: d.title }) : null, d.text ? el('p', { text: d.text }) : null);
+  if (d.kind === 'alert') sheet.append(el('div', { class: 'opts' }, el('button', { text: 'OK', onclick: close })));
+  if (d.kind === 'prompt') sheet.append(el('div', { class: 'opts' }, d.options.map((o) => el('button', { text: o.label, onclick: () => { close(); fireEvent('Event.UserInterface.Message.Prompt.Response', { FeedbackId: d.feedback || '', OptionId: o.id }); } }))));
+  if (d.kind === 'text') {
+    const input = el('input', { type: 'text', placeholder: d.placeholder || '', value: d.initial || '' });
+    sheet.append(el('div', { class: 'opts' }, input,
+      el('button', { text: d.submit, onclick: () => { close(); fireEvent('Event.UserInterface.Message.TextInput.Response', { FeedbackId: d.feedback || '', Text: input.value }); } }),
+      el('button', { class: 'sec', text: 'Cancel', onclick: () => { close(); fireEvent('Event.UserInterface.Message.TextInput.Clear', { FeedbackId: d.feedback || '' }); } })));
+  }
+  return el('div', { class: 'overlay' }, sheet);
+}
+function webviewOverlay() {
+  const safe = /^https?:\/\//i.test(S.webview.url);
+  return el('div', { class: 'overlay' }, el('div', { class: 'sheet' },
+    el('header', {}, el('span', { text: S.webview.title || 'Web view' }), el('button', { text: '✕', onclick: () => { S.webview = null; render(); } })),
+    el('div', { class: 'wv' }, 'A macro asked the device to show a web page (not loaded here):', el('code', { text: S.webview.url }),
+      safe ? el('a', { href: S.webview.url, target: '_blank', rel: 'noopener noreferrer', text: 'Open it in a new browser tab' }) : '')));
+}
+
+/* ================================================================ quick actions + time */
+function endCall() { setUserState('Status.SystemUnit.State.NumberOfActiveCalls', 0); fireEvent('Event.CallDisconnect', { CallId: 1, Reason: 'Local' }); }
+function renderQuick() {
+  const box = $('#quick'); box.textContent = '';
+  const present = S.state.get('Status.RoomAnalytics.PeoplePresence') === 'Yes';
+  box.append(
+    el('button', { class: 'btn' + (present ? ' on' : ''), onclick: () => { const on = !present; setUserState('Status.RoomAnalytics.PeoplePresence', on ? 'Yes' : 'No'); setUserState('Status.RoomAnalytics.PeopleCount.Current', on ? 2 : 0); renderQuick(); } }, present ? '🚶 People are in the room' : '🚶 Room is empty'),
+    el('button', { class: 'btn' + (isInCall() ? ' on' : ''), onclick: () => { if (isInCall()) endCall(); else { setUserState('Status.SystemUnit.State.NumberOfActiveCalls', 1); fireEvent('Event.CallSuccessful', { CallId: 1, CallType: 'Video', Protocol: 'sip', RemoteURI: 'someone@example.com' }); } renderQuick(); } }, isInCall() ? '📞 In a call' : '📞 Not in a call'),
+    el('small', { text: 'Click to flip. Macros that read presence or call state react.' }));
+}
+function updateClock() {
+  // only touch the clocks: a full render() here would wipe a half-typed dialog and flicker while time runs
+  $('#clock').textContent = hms(S.now);
+  const when = new Date(S.now); const big = $('#bigtime');
+  if (big) { big.textContent = `${pad(when.getHours())}:${pad(when.getMinutes())}`; $('#bigdate').textContent = when.toDateString(); }
+}
+function advance(ms) {
+  if (S.advancing) return Promise.resolve();
+  S.advancing = true;
+  const done = new Promise((r) => advanceWaiters.push(r));
+  toRuntime({ type: 'advance', ms });
+  return done;
+}
+function setPlaying(on) {
+  clearInterval(S.playTimer); S.playTimer = null;
+  $('#play').classList.toggle('on', on);
+  $('#play').innerHTML = on ? '&#10074;&#10074; Pause' : '&#9654; Run';
+  if (on) S.playTimer = setInterval(() => advance(250 * Number($('#speed').value)), 250);
+}
+
+/* ================================================================ boot */
+function boot() {
+  $('#subtitle').textContent = BUNDLE.title;
+  document.querySelectorAll('[data-adv]').forEach((b) => b.addEventListener('click', () => advance(Number(b.dataset.adv))));
+  $('#play').addEventListener('click', () => setPlaying(!S.playTimer));
+  $('#reload').addEventListener('click', restart);
+  restart();
+  selectTab('calls');
+}
+function restart() {
+  setPlaying(false);
+  S.calls = []; S.lines = []; S.errors = 0; S.panels.clear(); S.widgets.clear(); S.misses.clear(); S.open = null; S.dialogs = []; S.webview = null; S.advancing = false;
+  S.state = new Map(Object.entries(BUNDLE.state));
+  BUNDLE.panels.forEach((p) => { try { savePanels(parsePanels(p.xml)); } catch (e) { addLine('error', `Panel ${p.panel_id}: ${e.message}`); } });
+  addLine('sys', `Loaded ${BUNDLE.panels.length} UI panel(s); starting ${BUNDLE.macros.filter((m) => m.activate).length} active macro(s)…`);
+  renderQuick(); render(); startRuntime(); refreshTabs();
+}
+
+/* test hooks - used by the automated tests, harmless otherwise */
+window.__sim = {
+  get ready() { return ready; },
+  isReady: () => S.ready,
+  calls: () => S.calls.map((c) => ({ ...c })),
+  lines: () => S.lines.map((l) => ({ ...l })),
+  loaded: () => S.loaded.slice(),
+  state: (k) => S.state.get(k),
+  panelIds: () => [...S.panels.keys()],
+  dialogs: () => S.dialogs.map((d) => ({ ...d })),
+  openPanel: () => (S.open ? S.open.id : null),
+  advance: (ms) => advance(ms),
+  fire: (path, payload) => { fireEvent(path, payload); return new Promise((r) => setTimeout(r, 60)); },
+  click: (id) => { clickPanel(id); return new Promise((r) => setTimeout(r, 60)); },
+  widgetAction: (id, type, value) => act(id, type, value),
+  setState: (k, v) => setUserState(k, v),
+  screenText: () => $('#screen').innerText,
+  screenHtml: () => $('#screen').innerHTML,
+};
+boot();
+</script>
+</body>
+</html>
